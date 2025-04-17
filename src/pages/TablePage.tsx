@@ -10,14 +10,15 @@ export const TablePage = () => {
 
   useEffect(() => {
     getInitialMemes().then((data) => {
-      const stored = localStorage.getItem("memes");
-      if (stored) {
-        setMemes(JSON.parse(stored));
-      } else {
-        setMemes(data);
-        localStorage.setItem("memes", JSON.stringify(data));
-      }
-    });
+      setMemes(data);
+      localStorage.setItem("memes", JSON.stringify(data));
+    })
+      .catch(() => {
+        const stored = localStorage.getItem("memes");
+        if (stored) {
+          setMemes(JSON.parse(stored));
+        }
+      });
   }, []);
 
   const handleEditClick = (meme: Mem) => {
